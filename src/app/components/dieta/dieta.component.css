@@ -1,0 +1,107 @@
+
+.pageMargin{
+  margin-bottom: 2%;
+}
+
+.alert {
+    margin: 0 auto;
+    margin-top: 3%;
+    font-size: 110%;
+    color: red;
+    background-color: #F1F0F0;
+}
+
+.ng-invalid.ng-touched:not(form) {
+  border: 1px solid red;
+}
+
+.food_box {
+    outline: 1px solid #D2D4D6;
+    padding-top: 10px;
+    padding-bottom: 6px;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 4px 2px -2px rgba(180, 180, 180, 1);
+    -moz-box-shadow: 0px 4px 2px -2px rgba(180, 180, 180, 20);
+    box-shadow: 0px 4px 2px -2px rgba(180, 180, 180, 1);
+}
+
+.food_image {
+    margin-top: -10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: -9px;
+    min-height: 60px;
+    overflow: hidden;
+    /*border-radius: 50%;*/
+}
+
+.food_input{
+  margin-top: 0px;
+  padding-left: 65px;
+  padding-right: 15px;
+  margin-bottom: 0px;
+}
+
+.food_link {
+    font-weight: 200;
+    font-style: normal;
+    font-size: 12px;
+    margin-top: -15px;
+    padding-left: 0px;
+    position: relative;
+}
+
+
+.food_link_text {
+    position: relative;
+    z-index: 100;
+    margin-top: -16px;
+    opacity: 0.75;
+}
+
+.food_link_icon {
+    float: left;
+    z-index: 210;
+    padding-left: 2px;
+}
+
+.food_link .glyphicon {
+}
+
+.food_link_text span {
+}
+
+.food_link_icon span {
+    z-index: 200;
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.favorite_icon {
+    margin-top: 1px;
+    margin-left: -5px;
+    padding-left: 0px;
+}
+
+.favorite_food {
+    background: url(/static_files/images/addFavorite.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 20px;
+    display: inline-block;
+    vertical-align: top;
+    height: 18px;
+    margin-top: 2px;
+    margin-right: 5px;
+    cursor: pointer;
+}

@@ -1,0 +1,23 @@
+.cfg-cabecera__pie-imagen {
+  	font-family: Oswald;
+    background-color: #eee;
+    padding: 10px;
+}
+
+h2.c {
+  	font-family: Oswald;
+    background-color: transparent;
+    margin: 0 0 0 0;
+    padding: 0;
+    color: #545454;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}

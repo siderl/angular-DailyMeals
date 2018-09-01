@@ -1,0 +1,358 @@
+<div class="pageMargin">
+<br>
+<h4>Calcular metabolismo basal diario <small></small></h4>
+<hr>
+<p> El metabolismo basal diario se puede calcular de manera muy aproximada de la siguiente forma mediante las ecuaciones de Harris Benedict </p>
+<form (ngSubmit)="calculate(forma)" #forma="ngForm" novalidate="">
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Peso(KG)</label>
+      <div class="col-md-8">
+
+        <input
+               [ngClass]="{'is-invalid': forma.controls.peso?.errors?.required && forma.controls.peso?.touched}"
+               class="form-control"
+               type="number"
+               placeholder="Peso(KG)"
+               name="peso"
+               ngModel
+               required
+               #name="ngModel">
+      <div *ngIf="forma.controls.peso?.errors?.required && forma.controls.peso?.touched"
+            class="invalid-feedback">
+        Campo Requerido.
+      </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Estatura(CM)</label>
+      <div class="col-md-8">
+
+        <input [ngClass]="{'is-invalid': forma.controls.estatura?.errors?.required && forma.controls.estatura?.touched}"
+               class="form-control"
+               type="number"
+               placeholder="Estatura(CM)"
+               name="estatura"
+               ngModel
+               required
+               #name="ngModel">
+      <div *ngIf="forma.controls.estatura?.errors?.required && forma.controls.estatura?.touched"
+            class="invalid-feedback">
+           Campo Requerido.
+      </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Edad</label>
+    <div class="col-md-8">
+
+      <input [ngClass]="{'is-invalid': forma.controls.edad?.errors?.required && forma.controls.edad?.touched}"
+             class="form-control"
+             type="number"
+             placeholder="Edad"
+             name="edad"
+             ngModel
+             required
+             #name="ngModel">
+    <div *ngIf="forma.controls.edad?.errors?.required && forma.controls.edad?.touched"
+          class="invalid-feedback">
+         Campo Requerido.
+    </div>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Sexo</label>
+    <div class="col-md-8">
+
+    <select [ngClass]="{'is-invalid': forma.controls.sexo?.errors?.required && forma.controls.sexo?.touched}"
+           class="form-control"
+           ngModel
+           required
+           #name="ngModel"
+           name="sexo"> <!--Supplement an id here instead of using 'name'-->
+      <option value="value1">Hombre</option>
+      <option value="value2">Mujer</option>
+    </select>
+    <div *ngIf="forma.controls.sexo?.errors?.required && forma.controls.sexo?.touched"
+          class="invalid-feedback">
+         Campo Requerido.
+    </div>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button [disabled]="!forma.valid"  type="submit" class="btn btn-outline-primary">
+        Calcular
+      </button>
+      <input
+             class="form-control"
+             type="text"
+             placeholder="Calorias"
+             name="calorias"
+             [(ngModel)]="calories"
+             ngModel
+             disabled
+             #name="ngModel">
+      <label class="col-2 col-form-label">Calorias</label>
+    </div>
+  </div>
+
+</form>
+
+<br><br>
+<div style="text-align: center">
+<label id="lblTotalCal" style = "visibility:hidden">Calorias Seleccionadas</label>
+<input
+       type="text"
+       placeholder="0"
+       name="totalCalDieta"
+       id="totalCalories"
+       disabled
+       [(ngModel)]="totalCaloriasDieta"
+       align="middle"
+       style="display: inline-block"
+       style = "visibility:hidden">
+</div>
+<hr>
+<div id="alimentos" style="visibility:hidden">
+<div class="food_box col-xs-10">
+    <div class="row">
+        <div class="food_image col-xs-2">
+            <a class="clickable food_link">
+                <img srcset="/assets/img/milk.jpg" width="60" height="60">
+
+                <div class="food_link_text">
+                    <div class="food_link_icon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                    <div class="food_link_text_hide" style="display: none;">More info</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="food_name col-xs-5">
+            <div class="print_name">Leche (taza 244,0 g)</div>
+
+        </div>
+
+        <div class="food_input col-xs-4">
+          <input
+                 type="number"
+                 placeholder="0"
+                 name="porcionLeche"
+                 [(ngModel)]="porcionLeche"
+                 (ngModelChange)="onInputLeche($event)">
+          </div>
+          <label class="col-2 col-form-label">Porciones</label>
+          <div class="food_input col-xs-4">
+            <input
+                   type="text"
+                   placeholder="0"
+                   name="caloriasLeche"
+                   disabled
+                   [(ngModel)]="caloriasLeche">
+            </div>
+            <label class="col-2 col-form-label">Calorias</label>
+      </div>
+</div>
+<div class="food_box col-xs-10">
+    <div class="row">
+        <div class="food_image col-xs-2">
+            <a class="clickable food_link">
+                <img srcset="/assets/img/pollo.jpg" width="60" height="60">
+
+                <div class="food_link_text">
+                    <div class="food_link_icon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                    <div class="food_link_text_hide" style="display: none;">More info</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="food_name col-xs-5">
+            <div class="print_name">Pollo (Racion 200 g)</div>
+
+        </div>
+
+        <div class="food_input col-xs-4">
+          <input
+                 type="number"
+                 placeholder="0"
+                 name="porcionPollo"
+                 [(ngModel)]="porcionPollo"
+                 (ngModelChange)="onInputPollo($event)">
+          </div>
+          <label class="col-2 col-form-label">Porciones</label>
+          <div class="food_input col-xs-4">
+            <input
+                   type="text"
+                   placeholder="0"
+                   name="caloriasPollo"
+                   disabled
+                   [(ngModel)]="caloriasPollo">
+            </div>
+            <label class="col-2 col-form-label">Calorias</label>
+      </div>
+</div>
+<div class="food_box col-xs-10">
+    <div class="row">
+        <div class="food_image col-xs-2">
+            <a class="clickable food_link">
+                <img srcset="/assets/img/bistec.jpg" width="60" height="60">
+
+                <div class="food_link_text">
+                    <div class="food_link_icon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                    <div class="food_link_text_hide" style="display: none;">More info</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="food_name col-xs-5">
+            <div class="print_name">Bistec (Racion 200 g)</div>
+
+        </div>
+
+        <div class="food_input col-xs-4">
+          <input
+                 type="number"
+                 placeholder="0"
+                 name="porcionBistec"
+                 [(ngModel)]="porcionBistec"
+                 (ngModelChange)="onInputBistec($event)">
+          </div>
+          <label class="col-2 col-form-label">Porciones</label>
+          <div class="food_input col-xs-4">
+            <input
+                   type="text"
+                   placeholder="0"
+                   name="caloriasBistec"
+                   disabled
+                   [(ngModel)]="caloriasBistec">
+            </div>
+            <label class="col-2 col-form-label">Calorias</label>
+      </div>
+</div>
+<div class="food_box col-xs-10">
+    <div class="row">
+        <div class="food_image col-xs-2">
+            <a class="clickable food_link">
+                <img srcset="/assets/img/avena.jpg" width="60" height="60">
+
+                <div class="food_link_text">
+                    <div class="food_link_icon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                    <div class="food_link_text_hide" style="display: none;">More info</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="food_name col-xs-5">
+            <div class="print_name">Avena (1/2taza 100g)</div>
+
+        </div>
+
+        <div class="food_input col-xs-4">
+          <input
+                 type="number"
+                 placeholder="0"
+                 name="porcionAvena"
+                 [(ngModel)]="porcionAvena"
+                 (ngModelChange)="onInputAvena($event)">
+          </div>
+          <label class="col-2 col-form-label">Porciones</label>
+          <div class="food_input col-xs-4">
+            <input
+                   type="text"
+                   placeholder="0"
+                   name="caloriasAvena"
+                   disabled
+                   [(ngModel)]="caloriasAvena">
+            </div>
+            <label class="col-2 col-form-label">Calorias</label>
+      </div>
+</div>
+<div class="food_box col-xs-10">
+    <div class="row">
+        <div class="food_image col-xs-2">
+            <a class="clickable food_link">
+                <img srcset="/assets/img/pescado.jpg" width="60" height="60">
+
+                <div class="food_link_text">
+                    <div class="food_link_icon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                    <div class="food_link_text_hide" style="display: none;">More info</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="food_name col-xs-5">
+            <div class="print_name">Pescado(Racion 200g)</div>
+
+        </div>
+
+        <div class="food_input col-xs-4">
+          <input
+                 type="number"
+                 placeholder="0"
+                 name="porcionPescado"
+                 [(ngModel)]="porcionPescado"
+                 (ngModelChange)="onInputPescado($event)">
+          </div>
+          <label class="col-2 col-form-label">Porciones</label>
+          <div class="food_input col-xs-4">
+            <input
+                   type="text"
+                   placeholder="0"
+                   name="caloriasPescado"
+                   disabled
+                   [(ngModel)]="caloriasPescado">
+            </div>
+            <label class="col-2 col-form-label">Calorias</label>
+      </div>
+</div>
+<div class="food_box col-xs-10">
+    <div class="row">
+        <div class="food_image col-xs-2">
+            <a class="clickable food_link">
+                <img srcset="/assets/img/huevo.jpg" width="60" height="60">
+
+                <div class="food_link_text">
+                    <div class="food_link_icon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                    <div class="food_link_text_hide" style="display: none;">More info</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="food_name col-xs-5">
+            <div class="print_name">Huevo (1 Pieza Gde)</div>
+
+        </div>
+
+        <div class="food_input col-xs-4">
+          <input
+                 type="number"
+                 placeholder="0"
+                 name="porcionHuevo"
+                 [(ngModel)]="porcionHuevo"
+                 (ngModelChange)="onInputHuevo($event)">
+          </div>
+          <label class="col-2 col-form-label">Porciones</label>
+          <div class="food_input col-xs-4">
+            <input
+                   type="text"
+                   placeholder="0"
+                   name="caloriasHuevo"
+                   disabled
+                   [(ngModel)]="caloriasHuevo">
+            </div>
+            <label class="col-2 col-form-label">Calorias</label>
+      </div>
+</div>
+</div>
+</div>
