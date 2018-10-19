@@ -13,6 +13,8 @@ import { ObesidadComponent } from './components/obesidad/obesidad.component';
 import { NutricionComponent } from './components/nutricion/nutricion.component';
 import { DietaComponent } from './components/dieta/dieta.component';
 
+//Services 
+import { MealsService } from './services/meals/meals.service'
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { DietaComponent } from './components/dieta/dieta.component';
     HttpModule,
     APP_ROUTING
   ],
-  providers: [],
+  providers: [
+    MealsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

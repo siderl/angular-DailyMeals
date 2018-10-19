@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MealsService } from '../../services/meals/meals.service';
+import { Diet } from '../../models/diet.model';
 
 @Component({
   selector: 'app-dieta',
@@ -8,22 +10,32 @@ import { NgForm } from '@angular/forms';
 })
 export class DietaComponent{
 
-  private calories
-  private porcionLeche
-  private caloriasLeche
-  private porcionPollo
-  private caloriasPollo
-  private porcionBistec
-  private caloriasBistec
-  private porcionAvena
-  private caloriasAvena
-  private porcionPescado
-  private caloriasPescado
-  private porcionHuevo
-  private caloriasHuevo
-  private totalCaloriasDieta
+  public calories;
+  private porcionLeche;
+  private caloriasLeche;
+  private porcionPollo;
+  private caloriasPollo;
+  private porcionBistec;
+  private caloriasBistec;
+  private porcionAvena;
+  private caloriasAvena;
+  private porcionPescado;
+  private caloriasPescado;
+  private porcionHuevo;
+  private caloriasHuevo;
+  private totalCaloriasDieta;
+  private diet: Diet = new Diet();
+  private showTable: boolean;
+  private loading: boolean;
+  private breakfast: any = [];
+  private collation1: any = [];
+  private collation2: any = [];
+  private strongMeal: any = [];
+  private dinner: any = [];
 
-  constructor() { }
+  constructor(
+    private mealsService : MealsService
+  ) { }
 
   calculate(forma:NgForm){
     console.log("testSubmit")
@@ -42,75 +54,21 @@ export class DietaComponent{
       this.calories = 655.1 + ((9.463 * peso) + (1.8 * estatura) - (4.6756 * edad))
     }
 
-    document.getElementById('alimentos').style.visibility = 'visible'
-    document.getElementById('totalCalories').style.visibility = 'visible'
-    document.getElementById('lblTotalCal').style.visibility = 'visible'
-  }
+    this.loading = true;
 
-  updateTotalCalories(){
-    console.log("star wars")
-    this.totalCaloriasDieta = 0
-    if(this.caloriasLeche > 0)
-    {
-      this.totalCaloriasDieta += this.caloriasLeche
-    }
-    if(this.caloriasPollo > 0)
-    {
-      this.totalCaloriasDieta += this.caloriasPollo
-    }
-    if(this.caloriasBistec > 0)
-    {
-      this.totalCaloriasDieta += this.caloriasBistec
-    }
-    if(this.caloriasAvena > 0)
-    {
-      this.totalCaloriasDieta += this.caloriasAvena
-    }
-    if(this.caloriasPescado >0)
-    {
-      this.totalCaloriasDieta += this.caloriasPescado
-    }
-    if(this.caloriasHuevo > 0)
-    {
-      this.totalCaloriasDieta += this.caloriasHuevo
-    }
-
-    if(this.totalCaloriasDieta > this.calories)
-    {
-      document.getElementById('totalCalories').style.color = "red"
-    }
-
-  }
-
-
-  onInputLeche(value){
-    this.caloriasLeche = value * 149
-    this.updateTotalCalories()
-  }
-
-  onInputPollo(value){
-    this.caloriasPollo = value * 394
-    this.updateTotalCalories()
-  }
-
-  onInputBistec(value){
-    this.caloriasBistec = value * 504
-    this.updateTotalCalories()
-  }
-
-  onInputAvena(value){
-    this.caloriasAvena = value * 389
-    this.updateTotalCalories()
-  }
-
-  onInputPescado(value){
-    this.caloriasPescado = value * 168
-    this.updateTotalCalories()
-  }
-
-  onInputHuevo(value){
-    this.caloriasHuevo = value * 74
-    this.updateTotalCalories()
+    console.log(this.calories);
+    this.mealsService.getMeals(this.calories).subscribe(
+      (successResponse) => {
+        console.log(successResponse);
+        this.diet = successResponse.json();
+        this.showTable = true;
+        this.loading = false;
+        console.log(this.diet)
+      }, (errorResponse) => {
+        console.log("Error");
+        console.log(errorResponse);
+        
+      });
   }
 
 }
