@@ -15,7 +15,7 @@
                     <div class="col-md-4">
 
                         <input [ngClass]="{'is-invalid': forma.controls.peso?.errors?.required && forma.controls.peso?.touched}"
-                            class="form-control" type="number" placeholder="Peso(KG)" name="peso" ngModel required
+                            class="form-control" type="number" min="1" max="500"  placeholder="Peso(KG)" name="peso" ngModel required
                             #name="ngModel">
                         <div *ngIf="forma.controls.peso?.errors?.required && forma.controls.peso?.touched" class="invalid-feedback">
                             Campo Requerido.
@@ -25,7 +25,7 @@
                     <div class="col-md-4">
 
                         <input [ngClass]="{'is-invalid': forma.controls.estatura?.errors?.required && forma.controls.estatura?.touched}"
-                            class="form-control" type="number" placeholder="Estatura(CM)" name="estatura" ngModel
+                            class="form-control" type="number" min="1" max="400" placeholder="Estatura(CM)" name="estatura" ngModel
                             required #name="ngModel">
                         <div *ngIf="forma.controls.estatura?.errors?.required && forma.controls.estatura?.touched"
                             class="invalid-feedback">
@@ -42,7 +42,7 @@
                 <div class="col-md-4">
 
                     <input [ngClass]="{'is-invalid': forma.controls.edad?.errors?.required && forma.controls.edad?.touched}"
-                        class="form-control" type="number" placeholder="Edad" name="edad" ngModel required #name="ngModel">
+                        class="form-control" type="number" min="1" max="150" placeholder="Edad" name="edad" ngModel required #name="ngModel">
                     <div *ngIf="forma.controls.edad?.errors?.required && forma.controls.edad?.touched" class="invalid-feedback">
                         Campo Requerido.
                     </div>
@@ -124,7 +124,7 @@
         <div class="row" style="margin-top:5%;">
             <div class="col-md-9"></div>
             <div class="col-md-3">
-                <label class="col-form-label" style="margin-top:10%;margin-right: 4%;">Mostrar en Tabla</label>
+                <label class="col-form-label" style="margin-top:10%;margin-right: 4%; font-size:14pt;">Mostrar en Tabla</label>
                 <label class="switch">
                     <input type="checkbox" (change)="this.changeDietShowingForm()">
                     <span class="slider round"></span>
@@ -139,6 +139,7 @@
                     <tr>
                         <th>Alimento</th>
                         <th>Categoria</th>
+                        <th>Porcion</th>
                         <th>Cantidad Sugerida</th>
                         <th>Unidad</th>
                     </tr>
@@ -147,6 +148,7 @@
                     <tr *ngFor="let row of this.diet.dieta">
                         <td>{{row.AlimentoName}}</td>
                         <td>{{row.Categoria}}</td>
+                        <td>{{row.multiplier}}</td>
                         <td>{{row.CantidadSugerida}}</td>
                         <td>{{row.Unidad}}</td>
                     </tr>
