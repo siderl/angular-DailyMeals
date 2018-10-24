@@ -12,7 +12,7 @@
 
                 <div class="form-group row">
                     <label class="col-2 col-form-label">Peso(KG)</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
 
                         <input [ngClass]="{'is-invalid': forma.controls.peso?.errors?.required && forma.controls.peso?.touched}"
                             class="form-control" type="number" placeholder="Peso(KG)" name="peso" ngModel required
@@ -21,11 +21,8 @@
                             Campo Requerido.
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group row">
                     <label class="col-2 col-form-label">Estatura(CM)</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
 
                         <input [ngClass]="{'is-invalid': forma.controls.estatura?.errors?.required && forma.controls.estatura?.touched}"
                             class="form-control" type="number" placeholder="Estatura(CM)" name="estatura" ngModel
@@ -37,11 +34,12 @@
                     </div>
                 </div>
 
+
             </div>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label">Edad</label>
-                <div class="col-md-8">
+                <div class="col-md-4">
 
                     <input [ngClass]="{'is-invalid': forma.controls.edad?.errors?.required && forma.controls.edad?.touched}"
                         class="form-control" type="number" placeholder="Edad" name="edad" ngModel required #name="ngModel">
@@ -49,12 +47,8 @@
                         Campo Requerido.
                     </div>
                 </div>
-            </div>
-
-
-            <div class="form-group row">
                 <label class="col-2 col-form-label">Sexo</label>
-                <div class="col-md-8">
+                <div class="col-md-4">
 
                     <select [ngClass]="{'is-invalid': forma.controls.sexo?.errors?.required && forma.controls.sexo?.touched}"
                         class="form-control" ngModel required #name="ngModel" name="sexo">
@@ -68,6 +62,38 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label class="col-2 col-form-label">Nivel de Actividad</label>
+                <div class="col-md-4">
+
+                    <select [ngClass]="{'is-invalid': forma.controls.activity?.errors?.required && forma.controls.activity?.touched}"
+                        class="form-control" ngModel required #name="ngModel" name="activity">
+                        <!--Supplement an id here instead of using 'name'-->
+                        <option value="Sedentario">Sedentario</option>
+                        <option value="Actividad ligera">Actividad ligera</option>
+                        <option value="Actividad moderada">Actividad moderada</option>
+                        <option value="Actividad intensa">Actividad intensa</option>
+                        <option value="Actividad muy intensa">Actividad muy intensa</option>
+                    </select>
+                    <div *ngIf="forma.controls.activity?.errors?.required && forma.controls.activity?.touched" class="invalid-feedback">
+                        Campo Requerido.
+                    </div>
+                </div>
+                <label class="col-2 col-form-label">Objetivo</label>
+                <div class="col-md-4">
+
+                    <select [ngClass]="{'is-invalid': forma.controls.goal?.errors?.required && forma.controls.goal?.touched}"
+                        class="form-control" ngModel required #name="ngModel" name="goal">
+                        <!--Supplement an id here instead of using 'name'-->
+                        <option value="Mantener el peso">Mantener el peso</option>
+                        <option value="Adelgazar">Adelgazar</option>
+                        <option value="Subir de peso">Subir de peso</option>
+                    </select>
+                    <div *ngIf="forma.controls.goal?.errors?.required && forma.controls.goal?.touched" class="invalid-feedback">
+                        Campo Requerido.
+                    </div>
+                </div>
+            </div>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label">&nbsp;</label>
@@ -94,7 +120,19 @@
     </div>
 
     <div *ngIf="this.showTable">
-        <div class="form-group row">
+        <!-- Rounded switch -->
+        <div class="row" style="margin-top:5%;">
+            <div class="col-md-9"></div>
+            <div class="col-md-3">
+                <label class="col-form-label" style="margin-top:10%;margin-right: 4%;">Mostrar en Tabla</label>
+                <label class="switch">
+                    <input type="checkbox" (change)="this.changeDietShowingForm()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group row" *ngIf="this.showInTable">
             <div class="col-md-4"></div>
             <table id="dietTable" width="100%" class="table table-bordered">
                 <thead>
@@ -116,7 +154,7 @@
             </table>
         </div>
 
-        <div class="form-group row" >
+        <div class="form-group row" *ngIf="this.showInTable">
             <div class="col-md-4">
                 <p style="color:dimgrey; font-size: 14pt;">
                     <span style="color:rgb(73, 73, 73); font-size: 12pt;">
@@ -132,6 +170,248 @@
                     </span>
                     {{this.diet.Fitness}}
                 </p>
+            </div>
+        </div>
+
+        <section class="details-card" *ngIf="!this.showInTable">
+            <div class="container">
+                <div class="row" style="margin-bottom:2%">
+                    <div class="col-md-7">
+                        <div class="card-content" style="height:250px;">
+                            <div class="card-desc">
+                                <h3>Desayuno</h3>
+                                <div class="row" style="padding:0%">
+                                    <div class="col-md-5">
+                                        <p>Alimento</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Porcion</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Cantidad</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>Unidad</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngFor="let itemB of this.breakfast">
+                                    <div class="col-md-5">
+                                        <p>{{itemB.AlimentoName}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemB.multiplier}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemB.CantidadSugerida}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>{{itemB.Unidad}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card-img" style="height:250px;">
+                            <img src="./assets/img/desayuno.jpg" alt="">
+                            <span style="margin-left:2%;">
+                                <h4>Imagen Ilustrativa</h4>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom:2%">
+                    <div class="col-md-7">
+                        <div class="card-content" style="height:200px;">
+                            <div class="card-desc">
+                                <h3>Colación</h3>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <p>Alimento</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Porcion</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Cantidad</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>Unidad</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngFor="let itemC of this.collation1">
+                                    <div class="col-md-5">
+                                        <p>{{itemC.AlimentoName}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemC.multiplier}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemC.CantidadSugerida}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>{{itemC.Unidad}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card-img" style="height:200px;">
+                            <img src="./assets/img/colacion.jpg" alt="">
+                            <span style="margin-left:2%;">
+                                <h4>Imagen Ilustrativa</h4>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom:2%">
+                    <div class="col-md-7">
+                        <div class="card-content" style="height:300px;">
+                            <div class="card-desc">
+                                <h3>Comida</h3>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <p>Alimento</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Porcion</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Cantidad</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>Unidad</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngFor="let itemS of this.strongMeal">
+                                    <div class="col-md-5">
+                                        <p>{{itemS.AlimentoName}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemS.multiplier}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemS.CantidadSugerida}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>{{itemS.Unidad}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card-img" style="height:300px;">
+                            <img src="./assets/img/comida.jpg" alt="">
+                            <span style="margin-left:2%;">
+                                <h4>Imagen Ilustrativa</h4>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom:2%">
+                    <div class="col-md-7">
+                        <div class="card-content" style="height:200px;">
+                            <div class="card-desc">
+                                <h3>Colación</h3>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <p>Alimento</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Porcion</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Cantidad</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>Unidad</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngFor="let itemC of this.collation2">
+                                    <div class="col-md-5">
+                                        <p>{{itemC.AlimentoName}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemC.multiplier}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemC.CantidadSugerida}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>{{itemC.Unidad}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="card-img" style="height:200px;">
+                            <img src="./assets/img/colacion2.jpg" alt="">
+                            <span style="margin-left:2%;">
+                                <h4>Imagen Ilustrativa</h4>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom:2%">
+                    <div class="col-md-7">
+                        <div class="card-content" style="height:250px;">
+                            <div class="card-desc">
+                                <h3>Cena</h3>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <p>Alimento</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Porcion</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Cantidad</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>Unidad</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngFor="let itemD of this.dinner">
+                                    <div class="col-md-5">
+                                        <p>{{itemD.AlimentoName}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemD.multiplier}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>{{itemD.CantidadSugerida}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>{{itemD.Unidad}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card-img" style="height:250px;">
+                            <img src="./assets/img/cena.jpg" alt="">
+                            <span style="margin-left:2%;">
+                                <h4>Imagen Ilustrativa</h4>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="row" style="margin-bottom:5%">
+            <div class="col-md-9"></div>
+            <div class="col-md-3">
+                <a (click)="this.printDietPDF()" style="color:white;" class="btn btn-primary btn-info">
+                    <span class="material-icons" style="font-size:12pt;">print</span> Imprimir en PDF</a>
             </div>
         </div>
     </div>

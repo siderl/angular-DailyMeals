@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/timeout';
 
 @Injectable()
 export class MealsService {
@@ -14,6 +15,6 @@ export class MealsService {
 
     return this.http.get(
       this.generateDietURL + kCalories,
-      {headers: headers});
+      {headers: headers}).timeout(10000);
   }
 }
